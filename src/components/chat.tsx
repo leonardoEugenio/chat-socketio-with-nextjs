@@ -64,55 +64,65 @@ export function Chat() {
   }
 
   return (
-    <div className="flex flex-col h-screen bg-gray-100">
-      <div className="flex-1 overflow-auto p-4">
-        {messages.map((msg) => (
-          <div
-            key={msg.id}
-            className={`p-2 my-2 w-fit md:min-w-sm md:max-w-md shadow-lg rounded-3xl ${
-              userId === msg.from
-                ? 'bg-blue-500 text-white self-end ms-auto'
-                : 'bg-gray-200 text-black self-start'
-            }`}
-          >
-            <div className="flex flex-col">
-              <div className="space-x-2">
-                <strong
-                  className={`text-sm ${msg.from === userId ? 'text-gray-100' : 'text-gray-500'}`}
-                >
-                  {msg.from === userId ? 'Você' : `user: ${msg.from}`}
-                </strong>
-                <span className="text-sm">{format(msg.date, 'HH:mm')}</span>
+    <>
+      <div className="flex flex-col h-full bg-gray-200">
+        <div className="container mx-auto">
+          <div className="flex-1 p-4">
+            {messages.map((msg) => (
+              <div
+                key={msg.id}
+                className={`p-2 my-2 w-fit md:min-w-sm md:max-w-md shadow-lg  animate-fade-up rounded-2xl ${
+                  userId === msg.from
+                    ? 'bg-blue-500 text-white self-end ms-auto rounded-br-none'
+                    : 'bg-gray-100 text-black self-start rounded-bl-none'
+                }`}
+              >
+                <div className="flex flex-col">
+                  <div className="flex gap-2 w-full">
+                    <strong
+                      className={`text-sm ${msg.from === userId ? 'text-gray-100' : 'text-gray-500'}`}
+                    >
+                      {msg.from === userId ? 'Você' : `user: ${msg.from}`}
+                    </strong>
+                    <span
+                      className={`text-sm ms-auto ${msg.from === userId ? 'text-gray-100' : 'text-gray-500'}`}
+                    >
+                      {format(msg.date, 'HH:mm')}
+                    </span>
+                  </div>
+                  <div className="text-wrap whitespace-pre-line break-words">
+                    {msg.text}
+                  </div>
+                </div>
               </div>
-              <div className="text-wrap whitespace-pre-line break-words">
-                {msg.text}
-              </div>
-            </div>
+            ))}
+            <div ref={messagesEndRef} />
           </div>
-        ))}
-        <div ref={messagesEndRef} />
-      </div>
-      <form
-        onSubmit={(e) => {
-          e.preventDefault()
-          sendMessage()
-        }}
-        className="flex p-4 bg-white border-t border-gray-300"
-      >
-        <input
-          type="text"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          className="flex-1 p-2 border border-gray-300 rounded-l-lg focus:outline-none focus:border-blue-500"
-        />
-        <button
-          onClick={sendMessage}
-          className="p-2 bg-blue-500 text-white rounded-r-lg hover:bg-blue-600 focus:outline-none"
-          disabled={!userId} // Evita envio antes do ID estar definido
+        </div>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault()
+            sendMessage()
+          }}
+          className=" bg-white border-t border-gray-300 sticky bottom-0 left-0 right-0 w-full"
         >
-          Enviar
-        </button>
-      </form>
-    </div>
+          <div className="container mx-auto px-4 w-full flex p-4">
+            <input
+              type="text"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              className="flex-1 p-2 border border-gray-300 rounded-l-lg focus:outline-none focus:border-blue-500"
+            />
+            <button
+              onClick={sendMessage}
+              className="p-2 bg-blue-500 text-white rounded-r-lg hover:bg-blue-600 focus:outline-none"
+              disabled={!userId} // Evita envio antes do ID estar definido
+            >
+              Enviar
+            </button>
+          </div>
+        </form>
+      </div>
+    </>
   )
 }
