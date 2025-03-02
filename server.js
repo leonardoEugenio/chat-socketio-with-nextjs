@@ -17,7 +17,6 @@ app.prepare().then(() => {
   })
 
   io.on('connection', (socket) => {
-    console.log('Novo cliente conectado', socket.id)
     io.emit('message', {
       text: `Novo cliente conectado - ${socket.id}`,
       from: 'server',
