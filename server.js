@@ -7,14 +7,11 @@ const app = next({ dev })
 const handle = app.getRequestHandler()
 
 app.prepare().then(() => {
-  const server = createServer((req, res) => {
-    handle(req, res)
-  })
+  const server = createServer(handle) // <-- Usar diretamente
 
-  // Adicionando configuração de CORS no Socket.IO
   const io = new Server(server, {
     cors: {
-      origin: String(process.env.SITE_URL), // Permite conexões do frontend
+      origin: process.env.SITE_URL || '*', // Permite conexões do frontend
       methods: ['GET', 'POST'],
     },
   })
@@ -28,13 +25,7 @@ app.prepare().then(() => {
 
     socket.on('message', (msg) => {
       console.log('Mensagem recebida:', msg)
-
-      // Garante que a mensagem tenha um remetente
-      if (!msg.from) {
-        msg.from = socket.id
-      }
-
-      io.emit('message', msg)
+      io.emit('message', { ...msg, from: msg.from || socket.id })
     })
 
     socket.on('disconnect', () => {
@@ -47,8 +38,5 @@ app.prepare().then(() => {
   })
 
   const PORT = process.env.PORT || 3001
-  server.listen(PORT, (err) => {
-    if (err) throw err
-    console.log(`Servidor rodando na porta ${PORT}`)
-  })
+  server.listen(PORT, () => console.log(`Servidor rodando na porta ${PORT}`))
 })
