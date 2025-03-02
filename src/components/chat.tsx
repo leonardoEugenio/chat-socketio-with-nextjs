@@ -1,5 +1,6 @@
 'use client'
 
+import { format } from 'date-fns'
 import { useEffect, useRef, useState } from 'react'
 import io from 'socket.io-client'
 import { v4 as uuidv4 } from 'uuid'
@@ -10,6 +11,7 @@ interface Message {
   id: string
   text: string
   from: string
+  date: Date
 }
 
 export function Chat() {
@@ -49,7 +51,11 @@ export function Chat() {
 
   const sendMessage = () => {
     if (input.trim() && userId) {
-      const message = { id: uuidv4(), text: input, from: userId }
+      const message = {
+        id: uuidv4(),
+        text: input,
+        from: userId,
+      }
 
       // Envia mensagem apenas pelo socket, sem adicioná-la localmente
       socket.emit('message', message)
@@ -70,11 +76,14 @@ export function Chat() {
             }`}
           >
             <div className="flex flex-col">
-              <strong
-                className={`text-sm ${msg.from === userId ? 'text-gray-100' : 'text-gray-500'}`}
-              >
-                {msg.from === userId ? 'Você' : `user: ${msg.from}`}
-              </strong>
+              <div className="space-x-2">
+                <strong
+                  className={`text-sm ${msg.from === userId ? 'text-gray-100' : 'text-gray-500'}`}
+                >
+                  {msg.from === userId ? 'Você' : `user: ${msg.from}`}
+                </strong>
+                <span className="text-sm">{format(msg.date, 'HH:mm')}</span>
+              </div>
               <div className="text-wrap whitespace-pre-line break-words">
                 {msg.text}
               </div>

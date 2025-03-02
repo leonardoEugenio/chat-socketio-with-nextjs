@@ -21,11 +21,12 @@ app.prepare().then(() => {
     io.emit('message', {
       text: `Novo cliente conectado - ${socket.id}`,
       from: 'server',
+      date: new Date(),
     })
 
     socket.on('message', (msg) => {
       console.log('Mensagem recebida:', msg)
-      io.emit('message', { ...msg, from: msg.from || socket.id })
+      io.emit('message', { ...msg, from: msg.from, date: new Date() })
     })
 
     socket.on('disconnect', () => {
@@ -33,6 +34,7 @@ app.prepare().then(() => {
       io.emit('message', {
         text: `Cliente desconectado - ${socket.id}`,
         from: 'server',
+        date: new Date(),
       })
     })
   })
