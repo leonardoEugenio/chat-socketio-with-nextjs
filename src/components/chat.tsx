@@ -63,7 +63,7 @@ export function Chat() {
         {messages.map((msg) => (
           <div
             key={msg.id}
-            className={`p-2 my-2 w-fit min-w-sm max-w-md shadow-lg rounded-3xl ${
+            className={`p-2 my-2 w-fit md:min-w-sm md:max-w-md shadow-lg rounded-3xl ${
               userId === msg.from
                 ? 'bg-blue-500 text-white self-end ms-auto'
                 : 'bg-gray-200 text-black self-start'
