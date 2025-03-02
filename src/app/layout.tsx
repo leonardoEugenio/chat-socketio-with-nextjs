@@ -14,8 +14,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <Topbar />
-      <body>{children}</body>
+      <body className="flex flex-col h-screen">
+        <Topbar />
+        {children}
+      </body>
     </html>
   )
 }

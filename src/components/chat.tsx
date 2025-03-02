@@ -65,9 +65,9 @@ export function Chat() {
 
   return (
     <>
-      <div className="flex flex-col h-full bg-gray-200">
+      <div className="flex flex-col bg-gray-200">
         <div className="container mx-auto">
-          <div className="flex-1 p-4">
+          <div className="flex-1 flex-grow p-4">
             {messages.map((msg) => (
               <div
                 key={msg.id}
@@ -99,30 +99,30 @@ export function Chat() {
             <div ref={messagesEndRef} />
           </div>
         </div>
-        <form
-          onSubmit={(e) => {
-            e.preventDefault()
-            sendMessage()
-          }}
-          className=" bg-white border-t border-gray-300 sticky bottom-0 left-0 right-0 w-full"
-        >
-          <div className="container mx-auto px-4 w-full flex p-4">
-            <input
-              type="text"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              className="flex-1 p-2 border border-gray-300 rounded-l-lg focus:outline-none focus:border-blue-500"
-            />
-            <button
-              onClick={sendMessage}
-              className="p-2 bg-blue-500 text-white rounded-r-lg hover:bg-blue-600 focus:outline-none"
-              disabled={!userId} // Evita envio antes do ID estar definido
-            >
-              Enviar
-            </button>
-          </div>
-        </form>
       </div>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault()
+          sendMessage()
+        }}
+        className=" bg-white border-t border-gray-300 sticky bottom-0 left-0 right-0 w-full"
+      >
+        <div className="container mx-auto px-4 w-full flex p-4">
+          <input
+            type="text"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            className="flex-1 p-2 border border-gray-300 rounded-l-lg focus:outline-none focus:border-blue-500"
+          />
+          <button
+            onClick={sendMessage}
+            className="p-2 bg-blue-500 text-white rounded-r-lg hover:bg-blue-600 focus:outline-none"
+            disabled={!userId} // Evita envio antes do ID estar definido
+          >
+            Enviar
+          </button>
+        </div>
+      </form>
     </>
   )
 }

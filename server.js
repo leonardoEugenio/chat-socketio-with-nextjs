@@ -7,11 +7,11 @@ const app = next({ dev })
 const handle = app.getRequestHandler()
 
 app.prepare().then(() => {
-  const server = createServer(handle) // <-- Usar diretamente
+  const server = createServer(handle)
 
   const io = new Server(server, {
     cors: {
-      origin: '*', // Permite conexões do frontend
+      origin: '*',
       methods: ['GET', 'POST'],
     },
   })
