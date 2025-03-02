@@ -37,6 +37,6 @@ app.prepare().then(() => {
     })
   })
 
-  const PORT = process.env.PORT || 3001
+  const PORT = process.env.PORT || ''
   server.listen(PORT, () => console.log(`Servidor rodando na porta ${PORT}`))
 })
