@@ -11,7 +11,7 @@ app.prepare().then(() => {
 
   const io = new Server(server, {
     cors: {
-      origin: process.env.SITE_URL || '*', // Permite conexões do frontend
+      origin: '*', // Permite conexões do frontend
       methods: ['GET', 'POST'],
     },
   })
